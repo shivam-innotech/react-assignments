@@ -11,9 +11,10 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!input) {
-      alert("plz fill the data");
-    } else if (input && !toggleBtn) {
+    if(!input){
+      let ele = document.getElementById("valid");
+      ele.classList.add("is-invalid");
+    }else if (input && !toggleBtn) {
       setTask(
         task.map((elem) => {
           if (elem.id === isEdit) {
@@ -29,6 +30,8 @@ const App = () => {
       const newData = { id: Math.random(), name: input, isChecked: false };
       setTask([...task, newData]);
       setInput("");
+      let ele = document.getElementById("valid");
+      ele.classList.remove("is-invalid");
     }
   };
 
@@ -38,6 +41,7 @@ const App = () => {
       return todo;
     });
     setTask(change);
+   
   };
 
   const editItem = (id) => {
@@ -48,7 +52,7 @@ const App = () => {
     setIsEdit(id);
     setToggleBtn(false);
   };
-
+ 
   return (
     <>
       <h1>Todo Application</h1>
@@ -59,11 +63,12 @@ const App = () => {
               <input
                 type="text"
                 value={input}
-                className="form-control my-3"
+                id="valid"
+                className="form-control my-3 "
+                required
                 onChange={(e) => {
                   setInput(e.target.value);
                 }}
-                required
               />
               {toggleBtn ? (
                 <button className="btn btn-primary my-3" onClick={handleSubmit}>
@@ -74,8 +79,6 @@ const App = () => {
                   edit
                 </button>
               )}
-
-              {/* <button className="btn btn-primary my-3" onClick={editSubmit}>edit</button> */}
             </form>
           </div>
         </div>
@@ -125,5 +128,3 @@ const App = () => {
 };
 
 export default App;
-
-
